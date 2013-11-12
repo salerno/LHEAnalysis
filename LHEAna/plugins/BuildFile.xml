@@ -5,7 +5,7 @@
 <use name="PhysicsTools/UtilAlgos"/>
 <use name="FWCore/ServiceRegistry"/> 
 
-<library   file="*.cc" name="AnalyzerLHEAnaPlugins">
+<library   file="*.cc" name="LHEAnalysisLHEAnaPlugins">
   <flags   EDM_PLUGIN="1"/>
 </library>
 
