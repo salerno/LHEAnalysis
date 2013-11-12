@@ -1,22 +1,3 @@
-// -*- C++ -*-
-//
-// Package:    LHEAna
-// Class:      LHEAna
-// 
-/**\class LHEAna LHEAna.cc Analyzer/LHEAna/src/LHEAna.cc
-
- Description: [one line class summary]
-
- Implementation:
-     [Notes on implementation]
-*/
-//
-// Original Author:  Christophe ochando
-//         Created:  Wed Oct 16 16:59:01 CEST 2013
-// $Id$
-//
-//
-
 #ifndef LHEAna_H
 #define LHEAna_H
 
