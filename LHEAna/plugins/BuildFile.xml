@@ -1,0 +1,12 @@
+<use   name="root"/>
+<use   name="rootcore"/>
+<use name="FWCore/Framework"/>
+<use name="FWCore/PluginManager"/>
+<use name="PhysicsTools/UtilAlgos"/>
+<use name="FWCore/ServiceRegistry"/> 
+
+<library   file="*.cc" name="AnalyzerLHEAnaPlugins">
+  <flags   EDM_PLUGIN="1"/>
+</library>
+
+
