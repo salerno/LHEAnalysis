@@ -22,23 +22,23 @@ void GeneratorAna::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     gen_particle_->Clear();
     gen_particle_ID_.clear();
     gen_particle_status_.clear();
-	gen_particle_mother_.clear();
+    gen_particle_mother_.clear();
 	
     edm::Handle<View<Candidate> > genCandidatesCollection;
-	iEvent.getByLabel("genParticles", genCandidatesCollection);
+    iEvent.getByLabel("genParticles", genCandidatesCollection);
 	
-	TClonesArray &gen_particle = *gen_particle_;
+    TClonesArray &gen_particle = *gen_particle_;
     
-	int counter = 0;
+    int counter = 0;
 	
-	// ----------------------------
-	//      Loop on particles
-	// ----------------------------
-	for( View<Candidate>::const_iterator p = genCandidatesCollection->begin();
-        p != genCandidatesCollection->end();
+    // ----------------------------
+    //      Loop on particles
+    // ----------------------------
+    for( View<Candidate>::const_iterator p = genCandidatesCollection->begin();
+         p != genCandidatesCollection->end();
         ++p ) {
 		
-		if ( p->pdgId() == 25 ||
+         if ( p->pdgId() == 25 ||
              abs(p->pdgId()) == 15 ||
              abs(p->pdgId()) == 5 ||
             (abs(p->pdgId()) == 11  && abs(p->mother(0)->pdgId()) == 15) ||
