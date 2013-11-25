@@ -16,7 +16,8 @@
 //MC
 #include "DataFormats/HepMCCandidate/interface/GenParticleFwd.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
-
+#include "DataFormats/JetReco/interface/GenJet.h"
+#include "DataFormats/JetReco/interface/GenJetCollection.h"
 // ROOT include
 #include "TTree.h"
 #include "TClonesArray.h"

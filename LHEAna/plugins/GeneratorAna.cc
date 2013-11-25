@@ -27,6 +27,10 @@ void GeneratorAna::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     edm::Handle<View<Candidate> > genCandidatesCollection;
     iEvent.getByLabel("genParticles", genCandidatesCollection);
 	
+    edm::Handle<GenJetCollection> genJets;
+    iEvent.getByLabel("ak5GenJets", genJets);
+	
+    
     TClonesArray &gen_particle = *gen_particle_;
     
     int counter = 0;
@@ -38,11 +42,16 @@ void GeneratorAna::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
          p != genCandidatesCollection->end();
         ++p ) {
 		
-         if ( p->pdgId() == 25 ||
+         if (
+             (p->pdgId() == 25  && p->status() == 3 )||
              abs(p->pdgId()) == 15 ||
              abs(p->pdgId()) == 5 ||
-            (abs(p->pdgId()) == 11  && abs(p->mother(0)->pdgId()) == 15) ||
-            (abs(p->pdgId()) == 13  && abs(p->mother(0)->pdgId()) == 15) ) { // start if Higgs/b/tau/e/mu
+             (abs(p->pdgId()) == 12  && abs(p->mother(0)->pdgId()) == 15) ||
+             (abs(p->pdgId()) == 14  && abs(p->mother(0)->pdgId()) == 15) ||
+             (abs(p->pdgId()) == 16  && abs(p->mother(0)->pdgId()) == 15) ||
+             (abs(p->pdgId()) == 11  && abs(p->mother(0)->pdgId()) == 15) ||
+             (abs(p->pdgId()) == 13  && abs(p->mother(0)->pdgId()) == 15)
+             ) { // start if Higgs/b/tau/e/mu/nu
 			
             setMomentum(myvector,p->p4());
 			new (gen_particle[counter]) TLorentzVector(myvector);
@@ -51,11 +60,25 @@ void GeneratorAna::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 			gen_particle_status_.push_back(p->status());
 			gen_particle_mother_.push_back(p->mother(0)->pdgId());
 		
-            //cout << "PdgId=" << p->pdgId() << " status=" << p->status() << " Mass=" << myvector.M()  << " X,Y,Z=" << p->px() << "," << p->py() << "," << p->pz() << " Mother=" << p->mother(0)->pdgId() << endl;
+            cout << "PdgId=" << p->pdgId() << " status=" << p->status() << " Mass=" << myvector.M()  << " p(X,Y,Z)=(" << p->px() << "," << p->py() << "," << p->pz() << ") pt=" <<  p->pt()
+             << " eta=" << p->eta() <<  " phi=" << p->phi() << " Mother=" << p->mother(0)->pdgId() << endl;
 	
         } // end if Higgs
     }
 
+    // ----------------------------
+    //      Loop on jets
+    // ----------------------------
+    for( GenJetCollection::const_iterator jets = genJets->begin();
+        jets != genJets->end();
+        ++jets ) {
+        cout << " pt=" << jets->pt() << " eta=" << jets->eta() <<  " phi=" << jets->phi() << " costituents=" << (jets->getGenConstituents()).size()  << endl;
+        for (unsigned int i = 0 ; i < (jets->getGenConstituents()).size() ; ++i)
+        cout << " genConstID="  << (jets->getGenConstituent(i))->pdgId() << " pt=" <<  (jets->getGenConstituent(i))->pt() << " eta=" << (jets->getGenConstituent(i))->eta() <<  " phi=" << (jets->getGenConstituent(i))->phi() << endl;
+    
+    }
+
+    
   mytree_->Fill();
 
 }
